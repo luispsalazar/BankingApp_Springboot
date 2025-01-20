@@ -39,6 +39,12 @@ public class AddressController {
 		return ResponseEntity.ok(address);
 	}
 
+	@GetMapping("/lookup/{postalCode}")
+	public ResponseEntity<PostalLookupDto> getLookupByPostal(@PathVariable String postalCode) {
+		PostalLookupDto result = addressService.postalLookup(postalCode);
+		return ResponseEntity.ok(result);
+	}
+
 	@PostMapping
 	public ResponseEntity<Address> createAddress(@RequestBody Address request) {
 		Address createdAddress = addressService.createAddress(request);

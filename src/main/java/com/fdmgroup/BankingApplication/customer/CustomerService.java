@@ -11,9 +11,10 @@ import com.fdmgroup.BankingApplication.account.Account;
 import com.fdmgroup.BankingApplication.account.AccountNotFoundException;
 import com.fdmgroup.BankingApplication.account.AccountRepository;
 import com.fdmgroup.BankingApplication.address.Address;
-import com.fdmgroup.BankingApplication.address.AddressDto;
 import com.fdmgroup.BankingApplication.address.AddressNotFoundException;
 import com.fdmgroup.BankingApplication.address.AddressRepository;
+import com.fdmgroup.BankingApplication.address.AddressService;
+import com.fdmgroup.BankingApplication.address.PostalLookupDto;
 
 @Service
 public class CustomerService {
@@ -21,14 +22,16 @@ public class CustomerService {
 	private CustomerRepository customerRepo;
 	private AddressRepository addressRepo;
 	private AccountRepository accountRepo;
+	private AddressService addressService;
 
 	@Autowired
 	public CustomerService(CustomerRepository customerRepo, AddressRepository addressRepo,
-			AccountRepository accountRepo) {
+			AccountRepository accountRepo, AddressService addressService) {
 		super();
 		this.customerRepo = customerRepo;
 		this.addressRepo = addressRepo;
 		this.accountRepo = accountRepo;
+		this.addressService = addressService;
 	}
 
 	public Customer createCustomer(CustomerDto customerDto) {
@@ -38,9 +41,14 @@ public class CustomerService {
 		} else if (customerDto.getCustomerType().equals("company")) {
 			customer = new Company();
 		}
-		AddressDto addressDto = customerDto.getAddressDto();
 		Address address = new Address();
-		BeanUtils.copyProperties(addressDto, address);
+
+		address.setStreetNumber(customerDto.getStreetNumber());
+		address.setPostalCode(customerDto.getPostalCode());
+		PostalLookupDto lookup = addressService.postalLookup(customerDto.getPostalCode());
+		address.setCity(lookup.getStandard().getCity());
+		address.setProvince(lookup.getStandard().getProv());
+
 		address = addressRepo.save(address);
 		BeanUtils.copyProperties(customerDto, customer);
 		customer = customerRepo.save(customer);

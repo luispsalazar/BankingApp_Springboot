@@ -1,25 +1,18 @@
 package com.fdmgroup.BankingApplication.customer;
 
-import java.util.Objects;
-
-import com.fdmgroup.BankingApplication.address.Address;
-import com.fdmgroup.BankingApplication.address.AddressDto;
-
 public class CustomerDto {
 
 	private String name;
 	private String customerType;
-	private AddressDto addressDto;
+	private String streetNumber;
+	private String postalCode;
 
-	public CustomerDto() {
-		super();
-	}
-
-	public CustomerDto(String name, String customerType, AddressDto addressDto) {
+	public CustomerDto(String name, String customerType, String streetNumber, String postalCode) {
 		super();
 		this.name = name;
 		this.customerType = customerType;
-		this.addressDto = addressDto;
+		this.streetNumber = streetNumber;
+		this.postalCode = postalCode;
 	}
 
 	public String getName() {
@@ -38,16 +31,19 @@ public class CustomerDto {
 		this.customerType = customerType;
 	}
 
-	public AddressDto getAddressDto() {
-		return addressDto;
+	public String getStreetNumber() {
+		return streetNumber;
 	}
 
-	public void setAddressDto(AddressDto addressDto) {
-		this.addressDto = addressDto;
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomerDto [name=" + name + ", customerType=" + customerType + ", addressDto=" + addressDto + "]";
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 }
