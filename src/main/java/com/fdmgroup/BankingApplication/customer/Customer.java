@@ -2,6 +2,7 @@ package com.fdmgroup.BankingApplication.customer;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fdmgroup.BankingApplication.account.Account;
@@ -87,12 +88,18 @@ public abstract class Customer {
 		this.address = address;
 	}
 
-	public List<Account> getAccounts() {
+		public List<Account> getAccounts() {
 		return accounts;
 	}
 
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", name=" + name + ", address=" + address
+				+ ", accounts=" + accounts + "]";
 	}
 
 	@Override
@@ -111,11 +118,5 @@ public abstract class Customer {
 		Customer other = (Customer) obj;
 		return Objects.equals(accounts, other.accounts) && Objects.equals(address, other.address)
 				&& Objects.equals(customerId, other.customerId) && Objects.equals(name, other.name);
-	}
-
-	@Override
-	public String toString() {
-		return "Customer [customerId=" + customerId + ", name=" + name + ", address=" + address + ", accounts="
-				+ accounts + "]";
 	}
 }

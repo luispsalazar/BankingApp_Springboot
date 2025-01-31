@@ -28,7 +28,7 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
+//	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	public ResponseEntity<List<Customer>> getCustomers() {
 		List<Customer> customers = customerService.getCustomers();
